@@ -24,7 +24,7 @@ export default class Admin extends Component
 
     if(this.state.isAdmin)
     {
-      alert('Logged In');
+      //alert('Logged In');
       const Tabs = TabNavigator({
           Poll: {
             screen:AdminPoll,
@@ -51,7 +51,7 @@ export default class Admin extends Component
       return(<Tabs screenProps={this.props.navigation.navigate}/>);
     }
     else {
-      alert('Not log in');
+      //alert('Not log in');
       return(<NotTeamError navigate={this.props.navigation.navigate}/>);
     }
   }
