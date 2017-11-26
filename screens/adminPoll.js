@@ -6,7 +6,7 @@ import DukesHeader from '../components/header.js';
 export default class AdminPoll extends Component {
   render(){
     return(
-      <UnderConstruction title='Poll Management' navigate={this.props.navigation.navigate}/>
+      <UnderConstruction title='Poll Management' navigate={this.props.screenProps}/>
     );
   }
 }

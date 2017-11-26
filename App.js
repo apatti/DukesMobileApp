@@ -21,6 +21,8 @@ import Schedule from './screens/schedule.js';
 import Team from './screens/team.js';
 import {Icon} from 'react-native-elements';
 
+export default class App extends Component
+{
 const RootDrawer = DrawerNavigator(
   {
     Home: {
@@ -132,4 +134,5 @@ const RootDrawer = DrawerNavigator(
   }
 );
 
-export default RootDrawer;
+//export default RootDrawer;
+}

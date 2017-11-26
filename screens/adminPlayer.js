@@ -101,7 +101,7 @@ export default class AdminPlayer extends Component {
     }
     return(
       <View style={styles.container}>
-      <DukesHeader title='Player Management' navigate={this.props.navigation.navigate}/>
+      <DukesHeader title='Player Management' navigate={this.props.screenProps}/>
       <FlatList data={this.state.data}
         renderItem={({item})=>this.renderFlatListItem(item)}
         />

@@ -6,7 +6,7 @@ import DukesHeader from '../components/header.js';
 export default class AdminPlaying extends Component {
   render(){
     return(
-      <UnderConstruction title='Playing XI' navigate={this.props.navigation.navigate}/>
+      <UnderConstruction title='Playing XI' navigate={this.props.screenProps}/>
     );
   }
 }
