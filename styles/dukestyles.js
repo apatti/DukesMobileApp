@@ -27,6 +27,11 @@ const styles = StyleSheet.create({
   dukesHeader:{
     marginTop:15
   },
+  actionButtonIcon:{
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
 });
 
 export default styles;
