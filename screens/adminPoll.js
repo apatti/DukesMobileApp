@@ -57,6 +57,8 @@ class AdminPollManagement extends Component {
           eventDate:child.val().eventDate,
           eventTime:child.val().eventTime,
           eventDay:child.val().eventDay,
+          options:child.val().options,
+          multiSelect:child.val().multiSelect,
           key:child.key
         });
       }
@@ -69,9 +71,16 @@ class AdminPollManagement extends Component {
   renderFlatListItem(item)
   {
     return(
-      <ListItem title={item.title} subtitle={<View><Text>Poll ends on:{item.endTime}, {item.endDay},{item.endDate}</Text></View>}
+      <ListItem title={item.title}
+       subtitle={<View><Text>Poll ends on:{item.endTime}, {item.endDay},{item.endDate}</Text></View>}
+       onPress={this.onPollItemPress.bind(this,item)}
       />
     );
+  }
+
+  onPollItemPress(item)
+  {
+    this.props.navigation.navigate('PollEdit',{pollItem:item});
   }
 
   newPollPress()

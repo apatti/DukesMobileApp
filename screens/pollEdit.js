@@ -19,11 +19,13 @@ export default class PollEdit extends Component {
       loading:false,
       error:false,
       title:'',
+      endDateFull:'',
       endDate:'',
       endDay:'',
       endTime:'',
       multiSelect:false,
       isClosed:false,
+      isUpdate:false,
     };
     this.changeOptionText = this.changeOptionText.bind(this);
     this.changeMultiSelect = this.changeMultiSelect.bind(this);
@@ -37,11 +39,30 @@ export default class PollEdit extends Component {
   setUpInitialPollOptions()
   {
     //MMMM Do YYYY, h:mm:ss a
-    poll_options=[]
-    poll_options.push({title:'Available',key:0});
-    poll_options.push({title:'Not Available',key:1});
-    poll_options.push({title:'Add another option',key:2});
-    this.setState({poll_options:poll_options});
+    var pollItem = (this.props.navigation.state.params)?this.props.navigation.state.params.pollItem:null;
+    if(!pollItem)
+    {
+      poll_options=[]
+      poll_options.push({title:'Available',key:0});
+      poll_options.push({title:'Not Available',key:1});
+      poll_options.push({title:'Add another option',key:2});
+      this.setState({poll_options:poll_options});
+    }
+    else {
+      this.setState({
+        poll_options:pollItem.options,
+        loading:false,
+        error:false,
+        title:pollItem.title,
+        endDate:pollItem.endDate,
+        endDay:pollItem.endDay,
+        endTime:pollItem.endTime,
+        multiSelect:pollItem.multiSelect,
+        isClosed:pollItem.isClosed,
+        key:pollItem.key,
+        isUpdate:true
+      });
+    }
   }
 
   renderFlatListItem(item)
@@ -67,8 +88,8 @@ export default class PollEdit extends Component {
   changeMultiSelect()
   {
     this.setState((state)=>{
-      multi=state.multiSelect;
-      return {multi};
+      multiSelect=state.multiSelect;
+      return {multiSelect};
     });
   }
 
@@ -102,29 +123,39 @@ export default class PollEdit extends Component {
 
   onClosePress()
   {
-
+    if(this.state.isUpdate)
+    {
+      FBApp.database().ref('/polls/'+this.state.key).set({isClosed:true});
+      alert("Poll is closed!");
+      this.props.navigation.goBack();
+    }
   }
 
   onSavePress()
   {
-    var endDateStrings =this.state.endDate.split(';');
-    var endDate = endDateStrings[0];
-
-    FBApp.database().ref('/polls/').push({
+    dbRecord={
       title:this.state.title,
-      endDate:endDateStrings[0],
-      endDay:endDateStrings[1],
-      endTime:endDateStrings[2],
-      createdBy:'child.val().createdBy',
+      endDate:this.state.endDate,
+      endDay:this.state.endDay,
+      endTime:this.state.endTime,
+      createdBy:FBApp.auth().currentUser.displayName,
       isClosed:this.state.isClosed,
       tcaGameId:0,
+      multiSelect: this.state.multiSelect,
       eventDate:'child.val().eventDate',
       eventTime:'child.val().eventTime',
       eventDay:'child.val().eventDay',
       options:this.state.poll_options
-    });
+    };
+    if(this.state.isUpdate)
+    {
+      FBApp.database().ref('/polls/'+this.state.key).set(dbRecord);
+    }
+    else {
+      FBApp.database().ref('/polls/').push(dbRecord);
+    }
     alert("Poll is created!!");
-    this.props.navigation.navigate('PollManagement');
+    this.props.navigation.goBack();
   }
 
   render(){
@@ -152,20 +183,24 @@ export default class PollEdit extends Component {
           </View>
         }
         <FormLabel>Poll close date</FormLabel>
+        <View style={{flexDirection:'row',margin:10,}}>
+        <Text>{this.state.endTime} {this.state.endDay} {this.state.endDate}</Text>
         <DatePicker
-          date={this.state.endDate}
+          date={this.state.endDateFull}
           mode="datetime"
           placeholder="Poll end date"
           format="MM/DD/YY;dddd;h:mm a"
           confirmBtnText='Confirm'
           cancelBtnText='Cancel'
-          customStyles={{
-          dateInput: {
-            marginLeft: 15,
-          }
-          }}
-          onDateChange={(date)=>{this.setState({endDate:date})}}
+          hideText={true}
+          onDateChange={(newDate)=>{this.setState({
+            endDateFull:newDate,
+            endDate:newDate.split(';')[0],
+            endDay:newDate.split(';')[1],
+            endTime:newDate.split(';')[2],
+          })}}
         />
+        </View>
         <Divider style={{ backgroundColor: 'grey', margin:5 }}/>
         <View style={{flexDirection: 'row',margin: 5,justifyContent:'center'}}>
         <Button
