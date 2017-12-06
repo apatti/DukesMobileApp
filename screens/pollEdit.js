@@ -43,9 +43,9 @@ export default class PollEdit extends Component {
     if(!pollItem)
     {
       poll_options=[]
-      poll_options.push({title:'Available',key:0});
-      poll_options.push({title:'Not Available',key:1});
-      poll_options.push({title:'Add another option',key:2});
+      poll_options.push({title:'Available',key:0,results:[]});
+      poll_options.push({title:'Not Available',key:1,results:[]});
+      poll_options.push({title:'Add another option',key:2,results:[]});
       this.setState({poll_options:poll_options});
     }
     else {
@@ -114,7 +114,7 @@ export default class PollEdit extends Component {
     var poll_options = Object.assign([], this.state.poll_options);
     length=poll_options.length;
     poll_option = poll_options[length-1];
-    poll_options[length-1]={title:'New option',key:length-1};
+    poll_options[length-1]={title:'New option',key:length-1,results:[]};
     poll_option.key+=1;
     poll_options.push(poll_option);
     this.setState({poll_options:poll_options});
@@ -125,7 +125,7 @@ export default class PollEdit extends Component {
   {
     if(this.state.isUpdate)
     {
-      FBApp.database().ref('/polls/'+this.state.key).set({isClosed:true});
+      FBApp.database().ref('/polls/'+this.state.key).update({isClosed:true});
       alert("Poll is closed!");
       this.props.navigation.goBack();
     }

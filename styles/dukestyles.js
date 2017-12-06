@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
     height: 22,
     color: 'white',
   },
+  pollTitle:{
+    margin:20,
+    fontSize:20,
+    fontWeight:'bold',
+  }
 });
 
 export default styles;

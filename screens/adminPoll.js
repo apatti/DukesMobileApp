@@ -36,7 +36,7 @@ class AdminPollManagement extends Component {
 
   getPolls()
   {
-    this.pollsRef.on('value',(snapshot)=>this.loadPolls(snapshot));
+    this.pollsRef.orderByChild('isClosed').equalTo(false).on('value',(snapshot)=>this.loadPolls(snapshot));
   }
 
   loadPolls(snapshot)
