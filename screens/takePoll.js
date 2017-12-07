@@ -13,7 +13,7 @@ export default class TakePoll extends Component {
 
   constructor(props){
     super(props);
-    this.state={selectedIndex:1,pollItem:{},pollResults:{}};
+    this.state={selectedIndex:1,pollItem:{},pollResults:{},displayResults:[],displayResultTitle:''};
   }
 
   componentDidMount()
@@ -53,10 +53,10 @@ export default class TakePoll extends Component {
       results[pollOption.title]=[];
       var childRef = this.pollRef.child("/options/"+pollOption.key+"/results");
       childRef.on('child_added',function(data){
-        results[pollOption.title].push({"id":data.key,"email":data.val().email,"optionKey":pollOption.key});
+        results[pollOption.title].push({"key":data.key,"email":data.val().email,"name":data.val().name,"optionKey":pollOption.key});
       });
       childRef.on('child_removed',function(data){
-        results[pollOption.title]=results[pollOption.title].filter(item=>item.id!==data.key);
+        results[pollOption.title]=results[pollOption.title].filter(item=>item.key!==data.key);
       });
     }
     this.setState({pollResults:results});
@@ -76,7 +76,7 @@ export default class TakePoll extends Component {
           {
             for(let user of pollResults[key])
             {
-              this.pollRef.child('options/'+user.optionKey+'/results/'+user.id).remove();
+              this.pollRef.child('options/'+user.optionKey+'/results/'+user.key).remove();
             }
           }
         }
@@ -93,7 +93,12 @@ export default class TakePoll extends Component {
           this.pollRef.child('options/'+item.key+'/results/'+resultKey).remove();
     }
   }
-
+  renderResultsFlatListItem(item)
+  {
+    return(
+      <ListItem title={<View><Text>{item.name} ({item.email})</Text></View>} hideChevron={true}/>
+    );
+  }
   renderOptionsFlatListItem(item)
   {
     if(item.title!='Add another option')
@@ -129,7 +134,9 @@ export default class TakePoll extends Component {
             onIconPress={this.changeOption.bind(this,item,!checked,resultKey)}/>
           </View>} badge={{value:voteCount,
                           textStyle: { color: 'orange' },
-                          containerStyle: { marginTop: 15 }}} hideChevron={true}/>
+                          containerStyle: { marginTop: 15 },
+                          onPress:()=>{this.setState({displayResultTitle:item.title,displayResults:pollResult})}}}
+                          hideChevron={true}/>
       );
     }
   }
@@ -144,8 +151,10 @@ export default class TakePoll extends Component {
           renderItem={({item})=>this.renderOptionsFlatListItem(item)}
           />
         </View>
-        <Text>Poll results </Text>
-
+        <Text style={styles.resultsTitle}>{this.state.displayResultTitle}</Text>
+        <FlatList data={this.state.displayResults} extraData={this.state}
+          renderItem={({item})=>this.renderResultsFlatListItem(item)}
+        />
       </View>
     );
   }

@@ -36,7 +36,19 @@ const styles = StyleSheet.create({
     margin:20,
     fontSize:20,
     fontWeight:'bold',
-  }
+  },
+  resultsTitle:{
+    marginLeft:10,
+    marginTop:15,
+    marginBottom:5,
+    fontSize:15,
+    fontWeight:'bold',
+    color: 'brown',
+  },
+  resultItems:{
+    marginLeft:20,
+  },
+
 });
 
 export default styles;
