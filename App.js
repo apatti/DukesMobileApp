@@ -19,6 +19,7 @@ import Admin from './screens/admin.js';
 import Poll from './screens/poll.js';
 import Schedule from './screens/schedule.js';
 import Team from './screens/team.js';
+import Players from './screens/players.js'
 import {Icon} from 'react-native-elements';
 
 const RootDrawer = DrawerNavigator(
@@ -62,13 +63,27 @@ const RootDrawer = DrawerNavigator(
           ),
         },
       },
+      Players: {
+        screen: Players,
+        navigationOptions: {
+          drawerLabel: 'Players',
+          drawerIcon: ({tintColor,focused})=>(
+            <Icon
+              name="people"
+              size={20}
+              style={{color:tintColor}}
+            />
+          ),
+        },
+      },
       Team: {
         screen: Team,
         navigationOptions: {
           drawerLabel: 'Team',
           drawerIcon: ({tintColor,focused})=>(
             <Icon
-              name="people"
+              name="sports-club"
+              type="entypo"
               size={20}
               style={{color:tintColor}}
             />
