@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text,ScrollView} from 'react-native';
 import styles from '../styles/dukestyles.js'
 import UnderConstruction from './underconstruction.js';
 import DukesHeader from '../components/header.js';
@@ -115,6 +115,7 @@ export default class JoinUs extends Component {
       message = this.state.error;
     }
     return(
+      <ScrollView>
       <View style={styles.container}>
         <DukesHeader title='Join Us' navigate={this.props.navigation.navigate}/>
         <FormLabel>First name</FormLabel>
@@ -170,8 +171,10 @@ export default class JoinUs extends Component {
           onPress={this.onJoinPress.bind(this)}
           disabled ={FBApp.auth().currentUser!=null}
           loading = {this.state.loading}
+          style={{marginBottom:5}}
         />
       </View>
+      </ScrollView>
     );
   }
 }

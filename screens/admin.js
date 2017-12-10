@@ -47,8 +47,8 @@ export default class Admin extends Component
               tabBarIcon:()=>(<Icon name="person-add" size={15}/>)
             }
           },
-        });
-      return(<Tabs screenProps={this.props.navigation.navigate}/>);
+        },{tabBarPosition:'bottom'});
+      return(<Tabs screenProps={this.props.navigation.navigate} navigator={this.props.navigator}/>);
     }
     else {
       //alert('Not log in');

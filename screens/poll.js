@@ -28,7 +28,7 @@ export default class Poll extends Component
               tabBarIcon:()=>(<Icon name="poll" size={15}/>)
             }
           },
-        });
+        },{tabBarPosition:'bottom'});
       return(<Tabs screenProps={this.props.navigation.navigate}/>);
     }
     else {
