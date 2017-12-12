@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text} from 'react-native';  
 import styles from '../styles/dukestyles.js';
 import DukesHeader from '../components/header.js';
 

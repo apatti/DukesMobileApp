@@ -32,13 +32,36 @@ export default class InActivePlayers extends Component {
         });
   }
 
+  renderAvatar(role)
+  {
+    switch (role) {
+      case 'WicketKeeper':
+        return(
+          require('../images/wicket_keeper.png')
+        );
+        break;
+      case 'Captain':
+      case 'Vice Captain':
+        return(
+          require('../images/wicket_keeper.png')
+        );
+        break;
+      default:
+        return(
+          require('../images/cricket_player.png')
+        );
+        break;
+    }
+  }
+
   renderFlatListItem(item)
   {
     return(
       <ListItem
         roundAvatar={true}
         title={item.Name}
-        avatar={<Avatar rounded icon={{name:'person'}}/>}
+        avatar={this.renderAvatar(item.Rolename)}
+        subtitle={item.Rolename}
         hideChevron={true}
       />
     );

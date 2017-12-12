@@ -48,6 +48,27 @@ const styles = StyleSheet.create({
   resultItems:{
     marginLeft:20,
   },
+  gameTitle:{
+    fontSize:15,
+    fontWeight:'bold',
+    textAlign:'center',
+    marginBottom:8
+  },
+  lessImportant:{
+    fontSize:13,
+    fontWeight:'500',
+  },
+  tournamentName:{
+    fontSize:12,
+    fontWeight:"100",
+  },
+  umpireDetails:{
+    marginLeft:20,
+  },
+  phoneNumber:{
+    color:'blue',
+    fontWeight:"300"
+  }
 
 });
 

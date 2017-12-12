@@ -19,7 +19,6 @@ export default class ActivePlayers extends Component {
       return fetch('https://tennisballcricket.com/teamplayerbrief/184')
         .then((response)=>response.json())
         .then((response)=>{
-          //alert(JSON.stringify(response));
           this.setState({
             data:response,
             isLoading: false,
@@ -33,12 +32,39 @@ export default class ActivePlayers extends Component {
         });
   }
 
+  renderAvatar(role)
+  {
+    switch (role) {
+      case 'WicketKeeper':
+        return(
+          require('../images/wicket_keeper.png')
+        );
+        break;
+      case 'Captain':
+      case 'Vice Captain':
+        return(
+          require('../images/cricket_captain.png')
+        );
+        break;
+      case 'Team Manager':
+        return(
+          require('../images/dukes_logo_red.png')
+        );
+        break;
+      default:
+        return(
+          require('../images/cricket_player.png')
+        );
+        break;
+    }
+  }
+
   renderFlatListItem(item)
   {
     return(
       <ListItem
         roundAvatar={true}
-        avatar={<Avatar rounded icon={{name:'person'}}/>}
+        avatar={this.renderAvatar(item.Rolename)}
         title={item.Name}
         subtitle={item.Rolename}
         hideChevron={true}
