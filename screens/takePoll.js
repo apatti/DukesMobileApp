@@ -76,11 +76,13 @@ export default class TakePoll extends Component {
           {
             for(let user of pollResults[key])
             {
-              this.pollRef.child('options/'+user.optionKey+'/results/'+user.key).remove();
+              if(user.key==resultKey)
+                this.pollRef.child('options/'+user.optionKey+'/results/'+user.key).remove();
             }
           }
         }
-        this.pollRef.child('options/'+item.key+'/results/'+resultKey).remove();
+        if(resultKey!='')
+          this.pollRef.child('options/'+item.key+'/results/'+resultKey).remove();
       }
       this.optionResultRef.push({
         email:FBApp.auth().currentUser.email,
@@ -112,13 +114,12 @@ export default class TakePoll extends Component {
       if(pollResult)
       {
         voteCount = pollResult.length;
-        var resultKey='';
         for(let user of pollResult)
         {
           if(FBApp.auth().currentUser.email==user.email)
           {
             checked=true;
-            resultKey = user.id;
+            resultKey = user.key;
             //alert(resultKey);
           }
         }
