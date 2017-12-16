@@ -14,6 +14,7 @@ export default class TakePoll extends Component {
   constructor(props){
     super(props);
     this.state={selectedIndex:1,pollItem:{},pollResults:{},displayResults:[],displayResultTitle:''};
+    this.changeOption = this.changeOption.bind(this);
   }
 
   componentDidMount()
@@ -76,13 +77,11 @@ export default class TakePoll extends Component {
           {
             for(let user of pollResults[key])
             {
-              if(user.key==resultKey)
+              if(user.email==FBApp.auth().currentUser.email)
                 this.pollRef.child('options/'+user.optionKey+'/results/'+user.key).remove();
             }
           }
         }
-        if(resultKey!='')
-          this.pollRef.child('options/'+item.key+'/results/'+resultKey).remove();
       }
       this.optionResultRef.push({
         email:FBApp.auth().currentUser.email,
@@ -132,7 +131,7 @@ export default class TakePoll extends Component {
       return(
         <ListItem title={<View style={styles.container}>
             <CheckBox title={item.title} checked={checked} checkedIcon={checkedIcon} uncheckedIcon={uncheckedIcon}
-            onIconPress={this.changeOption.bind(this,item,!checked,resultKey)}/>
+            onIconPress={()=>this.changeOption(item,!checked,resultKey)}/>
           </View>} badge={{value:voteCount,
                           textStyle: { color: 'orange' },
                           containerStyle: { marginTop: 15 },
