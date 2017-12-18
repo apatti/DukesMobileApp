@@ -22,6 +22,12 @@ export default class Schedule extends Component {
         .then((response)=>{
           var playingGame=[];
           var umpiringGame=[];
+          if(response['Record']==null)
+          {
+            response['Record'] = [];
+            playingGame=[{Name:"No games"}];
+            umpiringGame=[{Name:"No games"}];
+          }
           for(let match of response['Record'])
           {
             if(match['BatTeamId1_l']==184||match['BatTeamId2_l']==184)
@@ -51,6 +57,13 @@ export default class Schedule extends Component {
 
     renderSectionListItem(item)
     {
+      if(item.Name=='No games')
+      {
+        return(
+          <Card title={"No Games schedule"}>
+          </Card>
+        );
+      }
       var ump1Phone='tel:'+item.UmpConfirmationPhNoTeam1;
       var ump2Phone='tel:'+item.UmpConfirmationPhNoTeam2;
       var title = item.Name + " vs " + item.BatTeam2Name;

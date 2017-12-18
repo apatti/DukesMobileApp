@@ -60,6 +60,7 @@ export default class TakePoll extends Component {
         results[pollOption.title]=results[pollOption.title].filter(item=>item.key!==data.key);
       });
     }
+    
     this.setState({pollResults:results});
   }
 
@@ -88,6 +89,7 @@ export default class TakePoll extends Component {
         name:FBApp.auth().currentUser.displayName,
         uid:FBApp.auth().currentUser.uid
       });
+      this.setState({displayResultTitle:item.title,displayResults:this.state.pollResults[item.title]});
     }
     else {
         if(resultKey!='')

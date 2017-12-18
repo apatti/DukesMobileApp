@@ -77,7 +77,7 @@ const RootDrawer = DrawerNavigator(
         },
       },
       Team: {
-        screen: Team,
+        screen: AboutUs,
         navigationOptions: {
           drawerLabel: 'Team',
           drawerIcon: ({tintColor,focused})=>(

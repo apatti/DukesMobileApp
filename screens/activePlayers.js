@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View,FlatList,Text,RefreshControl} from 'react-native';
+import {View,FlatList,Text,RefreshControl,Linking} from 'react-native';
 import {ListItem,Avatar} from 'react-native-elements';
 import UnderConstruction from './underconstruction.js';
 import DukesHeader from '../components/header.js';
@@ -11,7 +11,7 @@ export default class ActivePlayers extends Component {
     super(props);
     this.state={
       isLoading:true,
-      data: []
+      data: [],
     }
   }
 
@@ -59,6 +59,11 @@ export default class ActivePlayers extends Component {
     }
   }
 
+  playerClick(item)
+  {
+    Linking.openURL("https://tennisballcricket.com/player?id="+item.PlayerId);
+  }
+
   renderFlatListItem(item)
   {
     return(
@@ -68,6 +73,7 @@ export default class ActivePlayers extends Component {
         title={item.Name}
         subtitle={item.Rolename}
         hideChevron={true}
+        onPress={()=>{Linking.openURL("https://tennisballcricket.com/player?id="+item.PlayerId);}}
       />
     );
   }
@@ -83,5 +89,6 @@ export default class ActivePlayers extends Component {
         />
       </View>
     );
+
   }
 }
