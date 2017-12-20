@@ -4,7 +4,8 @@ import UnderConstruction from './underconstruction.js';
 import {CheckBox,ListItem,Icon,Divider} from 'react-native-elements';
 import FBApp from '../util/db.js';
 import styles from '../styles/dukestyles.js';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+import _ from 'lodash';
 
 export default class TakePoll extends Component {
   static navigationOptions = {
@@ -15,6 +16,7 @@ export default class TakePoll extends Component {
     super(props);
     this.state={selectedIndex:1,pollItem:{},pollResults:{},displayResults:[],displayResultTitle:''};
     this.changeOption = this.changeOption.bind(this);
+    this.onBadgeCountPress = this.onBadgeCountPress.bind(this);
   }
 
   componentDidMount()
@@ -60,7 +62,9 @@ export default class TakePoll extends Component {
         results[pollOption.title]=results[pollOption.title].filter(item=>item.key!==data.key);
       });
     }
-    
+    _.forEach(results,function(value,key){
+      value = _.uniqBy(value,'key');
+    });
     this.setState({pollResults:results});
   }
 
@@ -89,13 +93,21 @@ export default class TakePoll extends Component {
         name:FBApp.auth().currentUser.displayName,
         uid:FBApp.auth().currentUser.uid
       });
-      this.setState({displayResultTitle:item.title,displayResults:this.state.pollResults[item.title]});
+      var pollResults = this.state.pollResults[item.title];
     }
     else {
         if(resultKey!='')
           this.pollRef.child('options/'+item.key+'/results/'+resultKey).remove();
     }
+    this.setState({displayResults:[],displayResultTitle:''});
   }
+
+  onBadgeCountPress(title)
+  {
+    var pollResult = this.state.pollResults[title];
+    this.setState({displayResultTitle:title,displayResults:pollResult})
+  }
+
   renderResultsFlatListItem(item)
   {
     return(
@@ -137,7 +149,7 @@ export default class TakePoll extends Component {
           </View>} badge={{value:voteCount,
                           textStyle: { color: 'orange' },
                           containerStyle: { marginTop: 15 },
-                          onPress:()=>{this.setState({displayResultTitle:item.title,displayResults:pollResult})}}}
+                          onPress:()=>this.onBadgeCountPress(item.title)}}
                           hideChevron={true}/>
       );
     }
@@ -154,7 +166,7 @@ export default class TakePoll extends Component {
           />
         </View>
         <Text style={styles.resultsTitle}>{this.state.displayResultTitle}</Text>
-        <FlatList data={this.state.displayResults} extraData={this.state}
+        <FlatList data={this.state.displayResults}
           renderItem={({item})=>this.renderResultsFlatListItem(item)}
         />
       </View>
