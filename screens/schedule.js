@@ -17,7 +17,7 @@ export default class Schedule extends Component {
   }
 
   componentDidMount(){
-      return fetch('https://tennisballcricket.com/getMatchSyncData?teamId=184')
+      return fetch('https://tennisballcricket.com/getMatchSyncData?teamId=184&tourId=All')
         .then((response)=>response.json())
         .then((response)=>{
           var playingGame=[];

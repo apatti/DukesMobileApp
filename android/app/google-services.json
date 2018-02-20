@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "319656721002",
+    "firebase_url": "https://dukes-cricket.firebaseio.com",
+    "project_id": "dukes-cricket",
+    "storage_bucket": "dukes-cricket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319656721002:android:e98393fd91930379",
+        "android_client_info": {
+          "package_name": "com.dukesmobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319656721002-i83p5iumhuh5rs1i0ktoa68n5v02h23u.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "319656721002-bo5mmm7ha1joi9iv7df1i6jh26bm07oq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "319656721002-ppajmfotulboinl39ic9vq19ql60m0nq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "319656721002.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaV7y_k6P3Vd8TfABEJVixkTtIKS9NEj8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

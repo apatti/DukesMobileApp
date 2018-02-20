@@ -17,7 +17,11 @@ export default class Home extends Component {
             images:[
                     require('../images/dukesNewCupAll.jpg'),
                     require('../images/dukesPassion.jpg'),
-                    require('../images/dukesNewCupAll2.jpg')]
+                    require('../images/dukesNewCupAll2.jpg'),
+                    require('../images/dukes_frisbee.jpg'),
+                    require('../images/dukes_frisbee2.jpg'),
+                    require('../images/dukesVolleyBall1.jpg'),
+                    require('../images/dukesVolleyBall2.jpg')]
         };
     }
 
